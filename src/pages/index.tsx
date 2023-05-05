@@ -4,12 +4,14 @@ import Button from "~/components/Button";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { log } from "console";
 
 const Home: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
   });
+
   const { mutate } = api.generate.generateIcon.useMutation({
     onSuccess(data) {
       console.log("halo", data);
@@ -32,7 +34,6 @@ const Home: NextPage = () => {
   }
   return (
     <div>
-      <button onClick={() => signIn().catch(console.error)}>Sign In</button>
       <form onSubmit={handleSubmit} className=" flex flex-col gap-4">
         <FormGroup>
           <label>Prompt</label>
