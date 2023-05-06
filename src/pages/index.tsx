@@ -9,10 +9,11 @@ const Home: NextPage = () => {
   const [form, setForm] = useState({
     prompt: "",
   });
+  const [imageUrl, setImageUrl] = useState("");
 
   const { mutate } = api.generate.generateIcon.useMutation({
     onSuccess(data) {
-      console.log("halo", data);
+      setImageUrl(data.generatedImage);
     },
   });
 
@@ -27,11 +28,11 @@ const Home: NextPage = () => {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const res = mutate({ prompt: form.prompt });
+    mutate({ prompt: form.prompt });
     setForm({ ...form, prompt: "" });
   }
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit} className=" flex flex-col gap-4">
         <FormGroup>
           <label>Prompt</label>
@@ -43,7 +44,9 @@ const Home: NextPage = () => {
         </FormGroup>
         <Button className="">Submit</Button>
       </form>
-    </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {imageUrl && <img src={imageUrl} alt={"generated image"} />}
+    </>
   );
 };
 
