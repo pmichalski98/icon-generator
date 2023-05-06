@@ -1,10 +1,11 @@
 import { type NextPage } from "next";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { type ChangeEvent, type FormEvent, useState } from "react";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
 import Image from "next/image";
+import { useBuyCredits } from "~/hooks/useBuyCredits";
 
 const Home: NextPage = () => {
   const [form, setForm] = useState({

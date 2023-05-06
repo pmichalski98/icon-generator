@@ -10,13 +10,13 @@ import { prisma } from "~/server/db";
 
 const s3 = new S3({
   credentials: {
-    accessKeyId: env.S3_ACCESS_KEY as string,
-    secretAccessKey: env.S3_SECRET_KEY as string,
+    accessKeyId: env.S3_ACCESS_KEY,
+    secretAccessKey: env.S3_SECRET_KEY,
   },
   region: "eu-north-1",
 });
 const configuration = new Configuration({
-  apiKey: env.DALLE_API_KEY as string,
+  apiKey: env.DALLE_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 

@@ -25,6 +25,10 @@ const server = z.object({
   MOCK_DALLE: z.string(),
   S3_ACCESS_KEY:z.string(),
   S3_SECRET_KEY:z.string(),
+  STRIPE_SECRET_KEY:z.string(),
+  HOST_NAME:z.string(),
+  PRODUCT_PRICE_ID:z.string(),
+  STRIPE_WEBHOOK_SECRET:z.string()
 });
 
 /**
@@ -35,6 +39,7 @@ const client = z.object(
   /** @satisfies {Record<`NEXT_PUBLIC_${string}`, import('zod').ZodType>} */ (
     {
       // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+      NEXT_PUBLIC_STRIPE_KEY:z.string(),
     }
   ),
 );
@@ -56,6 +61,11 @@ const processEnv = {
   MOCK_DALLE: process.env.MOCK_DALLE,
   S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
   S3_SECRET_KEY: process.env.S3_SECRET_KEY,
+  NEXT_PUBLIC_STRIPE_KEY:process.env.NEXT_PUBLIC_STRIPE_KEY,
+  STRIPE_SECRET_KEY:process.env.STRIPE_SECRET_KEY,
+  HOST_NAME:process.env.HOST_NAME,
+  PRODUCT_PRICE_ID:process.env.PRODUCT_PRICE_ID,
+  STRIPE_WEBHOOK_SECRET:process.env.STRIPE_WEBHOOK_SECRET,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
