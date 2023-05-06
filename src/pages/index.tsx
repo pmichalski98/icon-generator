@@ -46,8 +46,8 @@ const Home: NextPage = () => {
         <Button className="">Submit</Button>
       </form>
       {imageUrl && (
-        <img
-          src={`data:image/png;base64,${imageUrl}`}
+        <Image
+          src={imageUrl}
           width={500}
           height={500}
           alt={"generated image"}

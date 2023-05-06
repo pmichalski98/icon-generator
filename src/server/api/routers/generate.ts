@@ -6,6 +6,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { env } from "~/env.mjs";
 import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
+import { prisma } from "~/server/db";
 
 const s3 = new S3({
   credentials: {
@@ -61,18 +62,25 @@ export const generateRouter = createTRPCRouter({
           code: "BAD_REQUEST",
         });
 
+      const icon = await ctx.prisma.icon.create({
+        data: {
+          prompt: input.prompt,
+          userId: ctx.session.user.id,
+        },
+      });
+
       await s3
         .putObject({
           Bucket: "generator-ikon",
           Body: Buffer.from(generatedImage, "base64"),
-          Key: "randomid",
+          Key: icon.id,
           ContentEncoding: "base64",
           ContentType: "image/gif",
         })
         .promise();
 
       return {
-        generatedImage,
+        generatedImage: `https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`,
       };
     }),
 });
