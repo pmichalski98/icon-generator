@@ -4,8 +4,6 @@ import Button from "~/components/Button";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { log } from "console";
 
 const Home: NextPage = () => {
   const [form, setForm] = useState({
