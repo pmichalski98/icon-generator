@@ -11,6 +11,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 async function generateIcon(prompt: string) {
+  console.log("mock = ", env.MOCK_DALLE);
   if (env.MOCK_DALLE === "true") {
     return "https://oaidalleapiprodscus.blob.core.windows.net/private/org-eGrIz0gGhpQCJArPvOaH4O5E/user-ab3VQ6wZ2Ew9Y314zkWvexzD/img-cKM4XmwIS8HWKWi600VhPuHu.png?st=2023-05-06T08%3A51%3A45Z&se=2023-05-06T10%3A51%3A45Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-05-06T00%3A37%3A46Z&ske=2023-05-07T00%3A37%3A46Z&sks=b&skv=2021-08-06&sig=e%2BgV8e8kyzLo2w/m%2BLScOymaqbAi%2B1DeE%2BBRApIE9rE%3D";
   } else {
@@ -25,7 +26,7 @@ async function generateIcon(prompt: string) {
 
 export const generateRouter = createTRPCRouter({
   generateIcon: protectedProcedure
-    .input(z.object({ prompt: z.string() }))
+    .input(z.object({ prompt: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       const { count } = await ctx.prisma.user.updateMany({
         where: {

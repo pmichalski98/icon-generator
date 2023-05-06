@@ -4,6 +4,7 @@ import Button from "~/components/Button";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   const [form, setForm] = useState({
@@ -44,8 +45,14 @@ const Home: NextPage = () => {
         </FormGroup>
         <Button className="">Submit</Button>
       </form>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {imageUrl && <img src={imageUrl} alt={"generated image"} />}
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          width={100}
+          height={100}
+          alt={"generated image"}
+        />
+      )}
     </>
   );
 };
