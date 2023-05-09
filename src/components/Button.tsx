@@ -1,10 +1,17 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import classNames from "classnames";
-const Button = (props: React.ComponentPropsWithoutRef<"button">) => {
-  const classes = classNames(
-    "hover:bg-pink-800 hover:text-slate-200 transition bg-pink-600 text-xl px-6 py-1.5 w-fit rounded",
-    props.className
-  );
+
+export const btnClasses = "transition text-lg px-3 py-1.5 w-fit rounded";
+const Button = (
+  props: React.ComponentPropsWithoutRef<"button"> & {
+    variant?: "primary" | "secondary";
+  }
+) => {
+  const variant =
+    props.variant === "secondary"
+      ? "bg-neutral-600 hover:bg-neutral-700 hover:text-slate-200"
+      : "bg-pink-600 hover:bg-pink-800 hover:text-slate-200";
+  const classes = classNames(btnClasses, variant, props.className);
   return (
     <button {...props} className={classes}>
       {props.children}
