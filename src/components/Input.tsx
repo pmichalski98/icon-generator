@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-const Input = (props: React.ComponentPropsWithoutRef<"input">) => {
+const Input = (props: React.ComponentProps<"input">) => {
   const classes = classNames(
     "w-fit rounded bg-slate-200/30 pl-2 text-lg outline-none",
     props.className

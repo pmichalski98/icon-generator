@@ -10,7 +10,7 @@ export default function Navbar() {
   const { buyCredits } = useBuyCredits();
 
   return (
-    <header className="container mx-auto flex justify-between gap-4 px-4 py-4">
+    <nav className="container mx-auto flex justify-between gap-4  px-4 py-4">
       <div className="flex items-center gap-4 text-lg">
         <MyLink href="/">Logo</MyLink>
         <MyLink href="/generate">Generate</MyLink>
@@ -20,7 +20,10 @@ export default function Navbar() {
           <Button onClick={() => signIn().catch(console.error)}>Zaloguj</Button>
         ) : (
           <>
-            <Button onClick={() => buyCredits().catch(console.error)}>
+            <Button
+              className="shadow-pink-400/60"
+              onClick={() => buyCredits().catch(console.error)}
+            >
               Buy credits
             </Button>
             <Button
@@ -32,6 +35,6 @@ export default function Navbar() {
           </>
         )}
       </div>
-    </header>
+    </nav>
   );
 }

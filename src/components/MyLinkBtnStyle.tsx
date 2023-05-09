@@ -1,12 +1,14 @@
-import React, { ComponentProps } from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
+import Link, { LinkProps } from "next/link";
+import { className } from "postcss-selector-parser";
 
 export const btnClasses =
   "shadow-lg transition text-lg px-3 py-1.5 w-fit rounded";
-const Button = (
-  props: ComponentProps<"button"> & {
-    variant?: "primary" | "secondary";
-  }
+const MyLinkBtnStyle = (
+  props: LinkProps & { children: ReactNode } & {
+    variant?: "secondary" | "primary";
+  } & { className?: string }
 ) => {
   const variant =
     props.variant === "secondary"
@@ -14,10 +16,10 @@ const Button = (
       : " bg-pink-600 hover:bg-pink-800 hover:text-slate-200";
   const classes = classNames(btnClasses, variant, props.className);
   return (
-    <button {...props} className={classes}>
+    <Link {...props} className={classes}>
       {props.children}
-    </button>
+    </Link>
   );
 };
 
-export default Button;
+export default MyLinkBtnStyle;
