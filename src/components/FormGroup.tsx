@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef } from "react";
+import React, { type ComponentPropsWithRef } from "react";
 import classNames from "classnames";
 
 const FormGroup = (props: ComponentPropsWithRef<"div">) => {

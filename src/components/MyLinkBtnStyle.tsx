@@ -1,7 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import classNames from "classnames";
-import Link, { LinkProps } from "next/link";
-import { className } from "postcss-selector-parser";
+import Link, { type LinkProps } from "next/link";
 
 export const btnClasses =
   "shadow-lg transition text-lg px-3 py-1.5 w-fit rounded";

@@ -1,7 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import Button, { btnClasses } from "./Button";
+import Button from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
-import Link from "next/link";
 import MyLink from "~/components/MyLink";
 
 export default function Navbar() {
