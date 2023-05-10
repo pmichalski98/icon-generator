@@ -1,8 +1,6 @@
 import { type NextPage } from "next";
 import React from "react";
 import Image from "next/image";
-import MyLink from "~/components/MyLink";
-import { btnClasses } from "~/components/Button";
 import MyLinkBtnStyle from "~/components/MyLinkBtnStyle";
 
 const Home: NextPage = () => {

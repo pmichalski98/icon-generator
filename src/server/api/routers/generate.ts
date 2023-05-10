@@ -6,7 +6,6 @@ import { Configuration, OpenAIApi } from "openai";
 import { env } from "~/env.mjs";
 import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
-import { prisma } from "~/server/db";
 
 const s3 = new S3({
   credentials: {
@@ -28,7 +27,7 @@ async function generateIcon(prompt: string) {
     const response = await openai.createImage({
       prompt,
       n: 1,
-      size: "1024x1024",
+      size: "512x512",
       response_format: "b64_json",
     });
     return response.data.data[0]?.b64_json;
@@ -37,7 +36,7 @@ async function generateIcon(prompt: string) {
 
 export const generateRouter = createTRPCRouter({
   generateIcon: protectedProcedure
-    .input(z.object({ prompt: z.string().min(1) }))
+    .input(z.object({ prompt: z.string().min(1), color: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { count } = await ctx.prisma.user.updateMany({
         where: {
@@ -55,7 +54,8 @@ export const generateRouter = createTRPCRouter({
           code: "BAD_REQUEST",
         });
 
-      const generatedImage = await generateIcon(input.prompt);
+      const finalPrompt = `a modern icon in ${input.color} color of ${input.prompt}, 3d rendered, metallic, material, shiny, minimalistic`;
+      const generatedImage = await generateIcon(finalPrompt);
       if (!generatedImage)
         throw new TRPCError({
           message: "Unable to generate image",
@@ -64,11 +64,10 @@ export const generateRouter = createTRPCRouter({
 
       const icon = await ctx.prisma.icon.create({
         data: {
-          prompt: input.prompt,
+          prompt: finalPrompt,
           userId: ctx.session.user.id,
         },
       });
-
       await s3
         .putObject({
           Bucket: "generator-ikon",

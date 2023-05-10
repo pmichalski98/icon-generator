@@ -10,8 +10,8 @@ const Button = (
 ) => {
   const variant =
     props.variant === "secondary"
-      ? "bg-neutral-600 hover:bg-neutral-700 hover:text-slate-200"
-      : " bg-pink-600 hover:bg-pink-800 hover:text-slate-200";
+      ? "bg-neutral-600 hover:bg-neutral-700 disabled:bg-neutral-700 hover:text-slate-200"
+      : " bg-pink-600 hover:bg-pink-800 hover:text-slate-200 disabled:bg-pink-950";
   const classes = classNames(btnClasses, variant, props.className);
   return (
     <button {...props} className={classes}>
