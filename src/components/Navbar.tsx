@@ -16,17 +16,20 @@ export default function Navbar() {
       </div>
       <div className="flex gap-4">
         {!isLoggedIn ? (
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           <Button onClick={() => signIn().catch(console.error)}>Zaloguj</Button>
         ) : (
           <>
             <Button
               className="shadow-pink-400/60"
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() => buyCredits().catch(console.error)}
             >
               Buy credits
             </Button>
             <Button
               variant={"secondary"}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() => signOut().catch(console.error)}
             >
               Wyloguj
