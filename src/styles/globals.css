@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+li {
+    list-style: none;
+}
 body {
     @apply bg-neutral-900/95 text-slate-100 ;
 }

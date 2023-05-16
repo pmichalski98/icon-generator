@@ -24,8 +24,6 @@ const Generate: NextPage = () => {
     color: "",
   });
   const [imageUrl, setImageUrl] = useState("");
-  const { data } = useSession();
-  console.log(data?.user);
 
   const { mutate, isLoading, error } = api.generate.generateIcon.useMutation({
     onSuccess(data) {

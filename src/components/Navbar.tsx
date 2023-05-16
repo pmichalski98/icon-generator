@@ -13,6 +13,7 @@ export default function Navbar() {
       <div className="flex items-center gap-4 text-lg">
         <MyLink href="/">Logo</MyLink>
         <MyLink href="/generate">Generate</MyLink>
+        <MyLink href="/collection">Collection</MyLink>
       </div>
       <div className="flex gap-4">
         {!isLoggedIn ? (
