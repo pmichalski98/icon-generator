@@ -2,11 +2,13 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Button from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import MyLink from "~/components/MyLink";
+import { api } from "~/utils/api";
 
 export default function Navbar() {
   const { data } = useSession();
   const isLoggedIn = !!data;
   const { buyCredits } = useBuyCredits();
+  const { data: credits } = api.user.getCredits.useQuery();
 
   return (
     <nav className="container mx-auto flex justify-between gap-4  px-4 py-4">
@@ -22,6 +24,7 @@ export default function Navbar() {
           <Button onClick={() => signIn().catch(console.error)}>Zaloguj</Button>
         ) : (
           <>
+            <div className=" self-center">Credits {credits}</div>
             <Button
               className="shadow-pink-400/60"
               // eslint-disable-next-line @typescript-eslint/no-misused-promises

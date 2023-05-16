@@ -11,6 +11,7 @@ const Community = () => {
         return (
           <li key={icon.id}>
             <Image
+              className="mb-4 rounded-lg"
               width={200}
               height={200}
               alt={"generated icon"}
