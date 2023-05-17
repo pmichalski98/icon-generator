@@ -6,20 +6,24 @@ const Collection = () => {
   const { data, isLoading, error } = api.icons.getIcons.useQuery();
 
   return (
-    <div>
-      {data?.map((icon) => {
-        return (
-          <li key={icon.id}>
-            <Image
-              width={200}
-              height={200}
-              alt={"generated icon"}
-              src={`https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`}
-            />
-          </li>
-        );
-      })}
-    </div>
+    <>
+      <h1 className="mb-12 text-4xl font-medium ">Twoje ikony</h1>
+      <div className="flex flex-wrap gap-6">
+        {data?.map((icon) => {
+          return (
+            <li key={icon.id}>
+              <Image
+                className=" rounded-lg"
+                width={200}
+                height={200}
+                alt={"generated icon"}
+                src={`https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`}
+              />
+            </li>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
