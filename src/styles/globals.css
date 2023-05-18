@@ -8,3 +8,18 @@ li {
 body {
     @apply bg-neutral-900/95 text-slate-100 ;
 }
+
+input[type=radio]#green {
+    background: green;
+}
+input[type=radio]#blue {
+    background: dodgerblue;
+}input[type=radio]#red {
+     background: red;
+ }input[type=radio]#yellow {
+      background: yellow;
+  }input[type=radio]#pink {
+       background: deeppink;
+   }input[type=radio]#orange {
+        background: orange;
+    }

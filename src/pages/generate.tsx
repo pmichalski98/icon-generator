@@ -8,18 +8,10 @@ import { ClipLoader } from "react-spinners";
 import IconList from "~/components/IconList";
 import { type Icon } from ".prisma/client";
 import classNames from "classnames";
+import { useSession } from "next-auth/react";
 
-const colors = [
-  "yellow",
-  "blue",
-  "red",
-  "green",
-  "pink",
-  "orange",
-  "slate",
-  "cyan",
-];
 const Generate: NextPage = () => {
+  const { data } = useSession();
   const [form, setForm] = useState({
     prompt: "",
     color: "",
@@ -32,6 +24,8 @@ const Generate: NextPage = () => {
       setImagesUrl(data);
     },
   });
+
+  const colors = ["yellow", "blue", "red", "green", "pink", "orange", "white"];
 
   function updateForm(key: string) {
     return (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +42,7 @@ const Generate: NextPage = () => {
   }
 
   return (
-    <section className="container mx-auto ">
+    <section className="container mx-auto lg:w-8/12">
       <h1 className="text-6xl ">Wygeneruj własne ikonki</h1>
       <form onSubmit={handleSubmit} className=" my-14 flex flex-col gap-4">
         <FormGroup>
@@ -71,21 +65,37 @@ const Generate: NextPage = () => {
                 ? "w-20 h-20 opacity-60"
                 : "h-24 w-24 border-2 border-white";
               const styles = classNames(
-                `appearance-none rounded-lg bg-${color}-400`,
+                `color-radio${color} appearance-none rounded-lg bg-white`,
                 checkedStyle
               );
               return (
-                <input
-                  key={color}
-                  className={styles}
-                  checked={isChecked}
-                  onChange={() => setForm((prev) => ({ ...prev, color }))}
-                  type="radio"
-                  name={color}
-                  value={form.color}
-                />
+                <div key={color}>
+                  <input
+                    id={color}
+                    className={styles}
+                    checked={isChecked}
+                    onChange={() => setForm((prev) => ({ ...prev, color }))}
+                    type="radio"
+                    name={color}
+                    value={form.color}
+                  />
+                </div>
               );
             })}
+            <div>
+              <input
+                className={
+                  "h-20 w-20 appearance-none rounded-lg bg-[url('../data/dice.png')] "
+                }
+                onChange={() =>
+                  setForm((prev) => ({ ...prev, color: "random" }))
+                }
+                checked={"random" === form.color}
+                type="radio"
+                name={"random"}
+                value={"random"}
+              />
+            </div>
           </div>
         </FormGroup>
         <FormGroup>
@@ -102,7 +112,7 @@ const Generate: NextPage = () => {
           />
         </FormGroup>
         <Button
-          disabled={isLoading}
+          disabled={isLoading || !data?.user?.name}
           className="flex w-full items-center justify-center gap-2 text-2xl"
         >
           {isLoading && <ClipLoader size={20} color={"white"} />}{" "}
