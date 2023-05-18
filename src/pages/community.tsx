@@ -1,6 +1,7 @@
 import React from "react";
 import { api } from "~/utils/api";
 import Image from "next/image";
+import IconList from "~/components/IconList";
 
 const Community = () => {
   const { data, isLoading, error } = api.icons.getCommunityIcons.useQuery();
@@ -12,17 +13,7 @@ const Community = () => {
       </h1>
       <div className="flex flex-wrap gap-6">
         {data?.map((icon) => {
-          return (
-            <li key={icon.id}>
-              <Image
-                className="mb-4 rounded-lg"
-                width={200}
-                height={200}
-                alt={"generated icon"}
-                src={`https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`}
-              />
-            </li>
-          );
+          return <IconList key={icon.id} icon={icon} />;
         })}
       </div>
     </>

@@ -4,8 +4,9 @@ import Button from "~/components/Button";
 import Input from "~/components/Input";
 import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
-import Image from "next/image";
 import { ClipLoader } from "react-spinners";
+import IconList from "~/components/IconList";
+import { Icon } from ".prisma/client";
 
 const colors = [
   "yellow",
@@ -23,13 +24,11 @@ const Generate: NextPage = () => {
     color: "",
     quantity: "",
   });
-  const [imagesUrl, setImagesUrl] = useState<{ generatedImage: string }[]>([]);
+  const [imagesUrl, setImagesUrl] = useState<Icon[]>([]);
 
   const { mutate, isLoading, error } = api.generate.generateIcon.useMutation({
     onSuccess(data) {
       setImagesUrl(data);
-      const utils = api.useContext();
-      void utils.invalidate();
     },
   });
 
@@ -99,19 +98,14 @@ const Generate: NextPage = () => {
           {isLoading && <ClipLoader size={20} color={"white"} />}Generate
         </Button>
       </form>
-      {imagesUrl.length > 0 &&
-        imagesUrl.map(({ generatedImage }) => {
-          return (
-            <Image
-              key={generatedImage}
-              className="mb-14"
-              src={generatedImage}
-              width={512}
-              height={512}
-              alt={"generated image"}
-            />
-          );
-        })}
+      {imagesUrl.length > 0 && (
+        <div className="mb-36 flex flex-wrap gap-6">
+          <h2 className="w-full text-3xl">Wygenerowane ikony</h2>
+          {imagesUrl.map((icon) => {
+            return <IconList icon={icon} key={icon.id} />;
+          })}
+        </div>
+      )}
     </section>
   );
 };

@@ -68,7 +68,7 @@ export const generateRouter = createTRPCRouter({
           code: "BAD_REQUEST",
         });
 
-      const generatedIcons = await Promise.all(
+      return await Promise.all(
         b64Images.map(async (image) => {
           const icon = await ctx.prisma.icon.create({
             data: {
@@ -88,11 +88,5 @@ export const generateRouter = createTRPCRouter({
           return icon;
         })
       );
-
-      return generatedIcons.map((icon) => {
-        return {
-          generatedImage: `https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`,
-        };
-      });
     }),
 });

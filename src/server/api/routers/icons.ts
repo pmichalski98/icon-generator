@@ -11,6 +11,9 @@ export const iconsRouter = createTRPCRouter({
       where: {
         userId: ctx.session.user.id,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     if (icons.length === 0)
       throw new TRPCError({
