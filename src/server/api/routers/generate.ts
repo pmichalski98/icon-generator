@@ -19,67 +19,80 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-async function generateIcon(prompt: string) {
+async function generateIcon(prompt: string, quantity = 1) {
   console.log("mock = ", env.MOCK_DALLE);
   if (env.MOCK_DALLE === "true") {
-    return base64Img;
+    return new Array<string>(quantity).fill(base64Img);
   } else {
     const response = await openai.createImage({
       prompt,
-      n: 1,
+      n: quantity,
       size: "512x512",
       response_format: "b64_json",
     });
-    return response.data.data[0]?.b64_json;
+    return response.data.data.map((result) => result.b64_json || "");
   }
 }
 
 export const generateRouter = createTRPCRouter({
   generateIcon: protectedProcedure
-    .input(z.object({ prompt: z.string().min(1), color: z.string() }))
+    .input(
+      z.object({
+        prompt: z.string().min(1),
+        color: z.string(),
+        quantity: z.number().min(1).max(10),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { count } = await ctx.prisma.user.updateMany({
         where: {
           id: ctx.session.user.id,
           credits: {
-            gte: 1,
+            gte: input.quantity,
           },
         },
-        data: { credits: { decrement: 1 } },
+        data: { credits: { decrement: input.quantity } },
       });
 
       if (count <= 0)
         throw new TRPCError({
-          message: "Not enough credits",
+          message: "Nie masz wystarczająco środków, doładuj konto",
           code: "BAD_REQUEST",
         });
 
-      const finalPrompt = `a modern icon in ${input.color} color of ${input.prompt}, 3d rendered, metallic, material, shiny, minimalistic`;
-      const generatedImage = await generateIcon(finalPrompt);
-      if (!generatedImage)
+      const finalPrompt = `wygeneruj ${input.quantity} sztuki ikonek w ${input.color} kolorze przedstawiające ${input.prompt}, nowoczesne, wysokiej jakości,minimalistyczne`;
+      const b64Images = await generateIcon(finalPrompt, input.quantity);
+      if (!b64Images)
         throw new TRPCError({
-          message: "Unable to generate image",
+          message: "Błąd podczas generowania ikon",
           code: "BAD_REQUEST",
         });
 
-      const icon = await ctx.prisma.icon.create({
-        data: {
-          prompt: finalPrompt,
-          userId: ctx.session.user.id,
-        },
-      });
-      await s3
-        .putObject({
-          Bucket: "generator-ikon",
-          Body: Buffer.from(generatedImage, "base64"),
-          Key: icon.id,
-          ContentEncoding: "base64",
-          ContentType: "image/gif",
+      const generatedIcons = await Promise.all(
+        b64Images.map(async (image) => {
+          const icon = await ctx.prisma.icon.create({
+            data: {
+              prompt: finalPrompt,
+              userId: ctx.session.user.id,
+            },
+          });
+          await s3
+            .putObject({
+              Bucket: "generator-ikon",
+              Body: Buffer.from(image, "base64"),
+              Key: icon.id,
+              ContentEncoding: "base64",
+              ContentType: "image/gif",
+            })
+            .promise();
+          return icon;
         })
-        .promise();
+      );
 
-      return {
-        generatedImage: `https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`,
-      };
+      return generatedIcons.map((icon) => {
+        return {
+          generatedImage: `https://generator-ikon.s3.eu-north-1.amazonaws.com/${icon.id}`,
+        };
+      });
     }),
 });
