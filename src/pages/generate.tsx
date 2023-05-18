@@ -6,7 +6,8 @@ import FormGroup from "~/components/FormGroup";
 import { api } from "~/utils/api";
 import { ClipLoader } from "react-spinners";
 import IconList from "~/components/IconList";
-import { Icon } from ".prisma/client";
+import { type Icon } from ".prisma/client";
+import classNames from "classnames";
 
 const colors = [
   "yellow",
@@ -15,8 +16,8 @@ const colors = [
   "green",
   "pink",
   "orange",
-  "white",
-  "other",
+  "slate",
+  "cyan",
 ];
 const Generate: NextPage = () => {
   const [form, setForm] = useState({
@@ -65,20 +66,24 @@ const Generate: NextPage = () => {
           <label>Wybierz główny kolor</label>
           <div className="grid grid-cols-4 gap-4">
             {colors.map((color) => {
+              const isChecked = color === form.color;
+              const checkedStyle = !isChecked
+                ? "w-20 h-20 opacity-60"
+                : "h-24 w-24 border-2 border-white";
+              const styles = classNames(
+                `appearance-none rounded-lg bg-${color}-400`,
+                checkedStyle
+              );
               return (
-                <label
+                <input
                   key={color}
-                  className="flex basis-1/4 items-center gap-2 capitalize"
-                >
-                  <input
-                    checked={color === form.color}
-                    onChange={() => setForm((prev) => ({ ...prev, color }))}
-                    type="radio"
-                    name={color}
-                    value={form.color}
-                  />
-                  {color}
-                </label>
+                  className={styles}
+                  checked={isChecked}
+                  onChange={() => setForm((prev) => ({ ...prev, color }))}
+                  type="radio"
+                  name={color}
+                  value={form.color}
+                />
               );
             })}
           </div>
@@ -91,11 +96,17 @@ const Generate: NextPage = () => {
             type="number"
             min={1}
             max={10}
+            placeholder={"1"}
+            required
             className="w-full p-2 focus:outline-1 focus:outline-rose-400 "
           />
         </FormGroup>
-        <Button disabled={isLoading} className="flex items-center gap-2">
-          {isLoading && <ClipLoader size={20} color={"white"} />}Generate
+        <Button
+          disabled={isLoading}
+          className="flex w-full items-center justify-center gap-2 text-2xl"
+        >
+          {isLoading && <ClipLoader size={20} color={"white"} />}{" "}
+          {!isLoading ? "Wygeneruj" : "Generowanie"}
         </Button>
       </form>
       {imagesUrl.length > 0 && (
