@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <header className="bg-neutral-900/50 shadow-md shadow-gray-500">
         <Navbar />
       </header>
-      <main className=" mx-auto mt-20 w-11/12 ">{children}</main>
+      <main className=" mx-auto  mt-20 w-11/12 ">{children}</main>
     </div>
   );
 };

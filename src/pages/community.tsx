@@ -11,7 +11,7 @@ const Community = () => {
       <h1 className="mb-12 text-4xl font-medium">
         Ikony wygenerowane przez społeczność
       </h1>
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-wrap justify-around gap-4 ">
         {data?.map((icon) => {
           return <IconList key={icon.id} icon={icon} />;
         })}

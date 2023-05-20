@@ -64,7 +64,7 @@ export const generateRouter = createTRPCRouter({
       if (env.MOCK_DALLE !== "true") {
         axios.defaults.headers.post["Authorization"] = env.DEEPL_API_KEY;
         const res = await axios.post(
-          `http://api-free.deepl.com/v2/translate?text=${input.prompt}&target_lang=EN-US`,
+          `http://api-free.deepl.com/v2/translate?text=${input.prompt}&target_lang=EN-US&source_lang=PL`,
           {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
