@@ -60,7 +60,9 @@ export const generateRouter = createTRPCRouter({
           code: "BAD_REQUEST",
         });
 
-      const finalPrompt = `wygeneruj ${input.quantity} sztuki ikonek w ${input.color} kolorze przedstawiające ${input.prompt}, nowoczesne, wysokiej jakości,minimalistyczne`;
+      const finalPrompt = `modern icon of ${input.prompt}, ${
+        input.color !== "random" ? input.color.concat(" ,") : ""
+      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality, no text`;
       console.log(finalPrompt);
       const b64Images = await generateIcon(finalPrompt, input.quantity);
       if (!b64Images)

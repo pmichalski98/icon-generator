@@ -9,6 +9,7 @@ import IconList from "~/components/IconList";
 import { type Icon } from ".prisma/client";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
 const Generate: NextPage = () => {
   const { data } = useSession();
@@ -41,6 +42,7 @@ const Generate: NextPage = () => {
     mutate({ ...form, quantity: parseInt(form.quantity) });
   }
 
+  let isChecked = false;
   return (
     <section className="container mx-auto lg:w-8/12">
       <h1 className="text-6xl ">Wygeneruj własne ikonki</h1>
@@ -60,12 +62,12 @@ const Generate: NextPage = () => {
           <label>Wybierz główny kolor</label>
           <div className="grid grid-cols-4 gap-4">
             {colors.map((color) => {
-              const isChecked = color === form.color;
+              isChecked = color === form.color;
               const checkedStyle = !isChecked
                 ? "w-20 h-20 opacity-60"
                 : "h-24 w-24 border-2 border-white";
               const styles = classNames(
-                `color-radio${color} appearance-none rounded-lg bg-white`,
+                `color-radio${color} appearance-none rounded-lg bg-white cursor-pointer`,
                 checkedStyle
               );
               return (
@@ -84,17 +86,16 @@ const Generate: NextPage = () => {
             })}
             <div>
               <input
-                className={
-                  "h-20 w-20 appearance-none rounded-lg bg-[url('../data/dice.png')] "
-                }
-                onChange={() =>
-                  setForm((prev) => ({ ...prev, color: "random" }))
-                }
+                className={` absolute h-20 w-20 cursor-pointer appearance-none `}
+                onChange={() => {
+                  setForm((prev) => ({ ...prev, color: "random" }));
+                }}
                 checked={"random" === form.color}
                 type="radio"
                 name={"random"}
                 value={"random"}
               />
+              <GiPerspectiveDiceSixFacesRandom size={80} />
             </div>
           </div>
         </FormGroup>
