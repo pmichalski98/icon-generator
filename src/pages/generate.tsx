@@ -10,6 +10,8 @@ import { type Icon } from ".prisma/client";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { RxThickArrowUp } from "react-icons/rx";
+import FormLabel from "~/components/FormLabel";
 
 const Generate: NextPage = () => {
   const { data } = useSession();
@@ -46,20 +48,33 @@ const Generate: NextPage = () => {
   return (
     <section className="container mx-auto lg:w-8/12">
       <h1 className="text-6xl ">Wygeneruj własne ikonki</h1>
+      <h2 className="mt-10 text-xl">
+        Szybki i prosty generator ikon za pomocą sztucznej inteligencji
+      </h2>
       <form onSubmit={handleSubmit} className=" my-14 flex flex-col gap-4">
         <FormGroup>
-          <label>Opisz jak ma wyglądać Twoja ikonka</label>
+          <FormLabel>Opisz jak ma wyglądać Twoja ikonka</FormLabel>
           <Input
             onChange={updateForm("prompt")}
             value={form.prompt}
             type="text"
             className="w-full p-2 focus:outline-1 focus:outline-rose-400 "
-            placeholder="wściekły kurczak"
+            placeholder="np. groźna panda"
           />
-          <p>{error && "You must provide a description"}</p>
+
+          {error && (
+            <p
+              className={
+                "py- flex w-fit items-center gap-2 rounded bg-red-600  px-4 py-2 text-xl font-medium"
+              }
+            >
+              <RxThickArrowUp size={30} />
+              Uzupełnij opis ikonki
+            </p>
+          )}
         </FormGroup>
         <FormGroup>
-          <label>Wybierz główny kolor</label>
+          <FormLabel>Wybierz główny kolor ikonki</FormLabel>
           <div className="grid grid-cols-4 gap-4">
             {colors.map((color) => {
               isChecked = color === form.color;
@@ -100,7 +115,7 @@ const Generate: NextPage = () => {
           </div>
         </FormGroup>
         <FormGroup>
-          <label>Ile ikon chcesz wygenerować ( 1 szt = 1 zł )</label>
+          <FormLabel>Liczba ikon ( 1 szt = 1 zł )</FormLabel>
           <Input
             onChange={updateForm("quantity")}
             value={form.quantity}

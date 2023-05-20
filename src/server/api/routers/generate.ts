@@ -6,6 +6,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { env } from "~/env.mjs";
 import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
+import axios from "axios";
 
 const s3 = new S3({
   credentials: {
@@ -60,9 +61,24 @@ export const generateRouter = createTRPCRouter({
           code: "BAD_REQUEST",
         });
 
+      if (env.MOCK_DALLE !== "true") {
+        axios.defaults.headers.post["Authorization"] = env.DEEPL_API_KEY;
+        const res = await axios.post(
+          `http://api-free.deepl.com/v2/translate?text=${input.prompt}&target_lang=EN-US`,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        input.prompt = res.data.translations[0].text as string;
+      }
+
+      console.log(input.prompt);
       const finalPrompt = `modern icon of ${input.prompt}, ${
         input.color !== "random" ? input.color.concat(" ,") : ""
-      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality, no text`;
+      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality, textless`;
       console.log(finalPrompt);
       const b64Images = await generateIcon(finalPrompt, input.quantity);
       if (!b64Images)
