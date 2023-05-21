@@ -12,7 +12,8 @@ interface LinkProps {
 const MyLink = ({ href, className, children }: LinkProps) => {
   const router = useRouter();
   const activeStyles =
-    router.pathname === href && " border-b-4 rounded  border-rose-400/80 ";
+    router.pathname === href && " border-l-4 pl-1 rounded border-rose-400/60 ";
+
   const classes = classNames(
     "font-medium hover:text-gray-300 ",
     className,

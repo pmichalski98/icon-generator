@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { GiTwoCoins, GiHamburgerMenu } from "react-icons/gi";
 import { BiRefresh } from "react-icons/bi";
 import { IoCloseSharp } from "react-icons/io5";
+import Image from "next/image";
 
 export default function Navbar() {
   const { data } = useSession();
@@ -36,9 +37,16 @@ export default function Navbar() {
               />
             )}
           </button>
-          {isOpen && <MyLink href="/">Logo</MyLink>}
+          <MyLink className="border-none" href="/">
+            <Image
+              className="rounded-lg "
+              alt={"logo"}
+              src={"/logo1.jpg"}
+              width={50}
+              height={50}
+            />
+          </MyLink>
           <div className={`hidden items-center gap-4 md:flex `}>
-            <MyLink href="/">Logo</MyLink>
             <MyLink href="/generate">Generate</MyLink>
             {isLoggedIn && <MyLink href="/collection">Collection</MyLink>}
             <MyLink href="/community">Community</MyLink>
@@ -64,7 +72,7 @@ export default function Navbar() {
                 >
                   <BiRefresh size={25} /> {credits}
                 </button>
-                <GiTwoCoins size={30} color={"yellow"} />
+                <GiTwoCoins size={30} className="opacity-80" color={"yellow"} />
               </div>
               <Button
                 className="shadow-pink-400/60"
