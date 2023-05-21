@@ -46,15 +46,20 @@ export default function Navbar() {
         </div>
         <div className="flex gap-4">
           {!isLoggedIn ? (
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            <Button onClick={() => signIn().catch(console.error)}>
+            <Button
+              onClick={() => {
+                signIn().catch(console.error);
+              }}
+            >
               Zaloguj
             </Button>
           ) : (
             <>
               <div className="flex items-center gap-1 rounded-full text-center text-lg font-medium ">
                 <button
-                  onClick={refreshCredits}
+                  onClick={() => {
+                    refreshCredits().catch(console.error);
+                  }}
                   className="flex items-center gap-2"
                 >
                   <BiRefresh size={25} /> {credits}
@@ -63,15 +68,17 @@ export default function Navbar() {
               </div>
               <Button
                 className="shadow-pink-400/60"
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onClick={() => buyCredits().catch(console.error)}
+                onClick={() => {
+                  buyCredits().catch(console.error);
+                }}
               >
                 Buy credits
               </Button>
               <Button
                 variant={"secondary"}
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onClick={() => signOut().catch(console.error)}
+                onClick={() => {
+                  signOut().catch(console.error);
+                }}
               >
                 Wyloguj
               </Button>
