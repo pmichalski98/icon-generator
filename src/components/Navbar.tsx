@@ -15,7 +15,6 @@ export default function Navbar() {
   const { buyCredits } = useBuyCredits();
   const { data: credits } = api.user.getCredits.useQuery();
   const utils = api.useContext();
-  console.log("halo");
   async function refreshCredits() {
     await utils.user.getCredits.invalidate();
   }

@@ -54,6 +54,7 @@ export const generateRouter = createTRPCRouter({
         },
         data: { credits: { decrement: input.quantity } },
       });
+      const usersPrompt = input.prompt;
 
       if (count <= 0)
         throw new TRPCError({
@@ -91,7 +92,7 @@ export const generateRouter = createTRPCRouter({
         b64Images.map(async (image) => {
           const icon = await ctx.prisma.icon.create({
             data: {
-              prompt: finalPrompt,
+              prompt: usersPrompt,
               userId: ctx.session.user.id,
             },
           });
