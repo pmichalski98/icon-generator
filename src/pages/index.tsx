@@ -24,7 +24,7 @@ const Home: NextPage = () => {
           </MyLinkBtnStyle>
         </div>
         <Image
-          className="rounded shadow-xl shadow-gray-700/40 "
+          className="mx-auto rounded shadow-xl shadow-gray-700/40 "
           src="/baner1.png"
           alt="hero image"
           width={500}

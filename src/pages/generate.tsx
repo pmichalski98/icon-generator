@@ -132,7 +132,11 @@ const Generate: NextPage = () => {
           className="flex w-full items-center justify-center gap-2 text-2xl"
         >
           {isLoading && <ClipLoader size={20} color={"white"} />}{" "}
-          {!isLoading ? "Wygeneruj" : "Generowanie"}
+          {data?.user
+            ? !isLoading
+              ? "Wygeneruj"
+              : "Generowanie"
+            : "Musisz się zalogować"}
         </Button>
       </form>
       {imagesUrl.length > 0 && (

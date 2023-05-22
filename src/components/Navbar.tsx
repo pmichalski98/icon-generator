@@ -79,6 +79,7 @@ export default function Navbar() {
                 onClick={() => {
                   buyCredits().catch(console.error);
                 }}
+                disabled
               >
                 Buy credits
               </Button>
