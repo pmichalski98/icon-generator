@@ -14,7 +14,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = !!data;
   const { buyCredits } = useBuyCredits();
-  const { data: credits } = api.user.getCredits.useQuery();
+  const {
+    data: credits,
+    error,
+    isLoading,
+  } = api.user.getCredits.useQuery(undefined, { enabled: isLoggedIn });
+
   const utils = api.useContext();
   async function refreshCredits() {
     await utils.user.getCredits.invalidate();
