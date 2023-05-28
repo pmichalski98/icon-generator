@@ -12,7 +12,7 @@ const IconList = ({ icon, hover }: IconProps) => {
     <li key={icon.id}>
       <Image
         title={hover !== false ? icon.prompt : ""}
-        className={`mx-auto w-fit rounded-3xl transition ${
+        className={`mx-auto rounded-3xl transition ${
           hover !== false ? "hover:opacity-60" : ""
         }`}
         width="180"

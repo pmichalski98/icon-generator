@@ -16,7 +16,7 @@ const Collection = () => {
   if (error) return <div>Błąd przy ładowaniu zawartości...</div>;
   return (
     <>
-      <h1 className="mb-12 flex gap-2 text-4xl font-medium ">
+      <h1 className="mb-12 flex flex-wrap gap-2 text-4xl font-medium">
         Twoja kolekcja <p className="text-rose-400">{data?.length}</p> ikon
       </h1>
       <div className="grid grid-cols-2 flex-wrap justify-around gap-4 md:flex ">
