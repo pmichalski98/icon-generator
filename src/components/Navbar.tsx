@@ -42,7 +42,11 @@ export default function Navbar() {
               />
             )}
           </button>
-          <MyLink className="border-none" href="/">
+          <MyLink
+            onClick={() => setIsOpen(false)}
+            className="border-none"
+            href="/"
+          >
             <Image
               className="rounded-lg "
               alt={"logo"}
@@ -75,8 +79,9 @@ export default function Navbar() {
                   }}
                   className="flex items-center gap-2"
                 >
-                  <BiRefresh size={25} /> {credits}
+                  <BiRefresh size={25} />
                 </button>
+                <p>{credits}</p>
                 <GiTwoCoins size={30} className="opacity-80" color={"yellow"} />
               </div>
               <Button
@@ -102,9 +107,17 @@ export default function Navbar() {
       </div>
       {isOpen && (
         <div className={`flex flex-col items-center gap-2 text-lg md:hidden`}>
-          <MyLink href="/generate">Generate</MyLink>
-          {isLoggedIn && <MyLink href="/collection">Collection</MyLink>}
-          <MyLink href="/community">Community</MyLink>
+          <MyLink onClick={() => setIsOpen(false)} href="/generate">
+            Generator
+          </MyLink>
+          {isLoggedIn && (
+            <MyLink onClick={() => setIsOpen(false)} href="/collection">
+              Kolekcja
+            </MyLink>
+          )}
+          <MyLink onClick={() => setIsOpen(false)} href="/community">
+            Społeczność
+          </MyLink>
         </div>
       )}
     </nav>

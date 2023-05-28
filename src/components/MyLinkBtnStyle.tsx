@@ -11,8 +11,8 @@ const MyLinkBtnStyle = (
 ) => {
   const variant =
     props.variant === "secondary"
-      ? "bg-neutral-600 hover:bg-neutral-700 hover:text-slate-200"
-      : " bg-pink-600 hover:bg-pink-800 hover:text-slate-200";
+      ? "font-medium bg-neutral-600 hover:bg-neutral-700 hover:text-slate-200"
+      : "font-medium bg-pink-600 hover:bg-pink-800 hover:text-slate-200";
   const classes = classNames(btnClasses, variant, props.className);
   return (
     <Link {...props} className={classes}>

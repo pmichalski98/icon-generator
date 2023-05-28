@@ -129,7 +129,7 @@ const Generate: NextPage = () => {
         </FormGroup>
         <Button
           disabled={isLoading || !data?.user?.name}
-          className="flex w-full items-center justify-center gap-2 text-2xl"
+          className="flex w-full items-center justify-center gap-2 text-3xl font-medium"
         >
           {isLoading && <ClipLoader size={20} color={"white"} />}{" "}
           {data?.user
