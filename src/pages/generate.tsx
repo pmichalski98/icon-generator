@@ -129,7 +129,7 @@ const Generate: NextPage = () => {
         </FormGroup>
         <Button
           disabled={isLoading || !data?.user?.name}
-          className="flex w-full items-center justify-center gap-2 text-3xl font-medium"
+          className="flex w-full items-center justify-center gap-2 text-2xl font-medium"
         >
           {isLoading && <ClipLoader size={20} color={"white"} />}{" "}
           {data?.user
@@ -143,7 +143,7 @@ const Generate: NextPage = () => {
         <div className="mb-36 flex flex-wrap gap-6">
           <h2 className="w-full text-3xl">Wygenerowane ikony</h2>
           {imagesUrl.map((icon) => {
-            return <IconList icon={icon} key={icon.id} />;
+            return <IconList hover={false} icon={icon} key={icon.id} />;
           })}
         </div>
       )}
