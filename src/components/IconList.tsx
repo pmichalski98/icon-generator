@@ -7,11 +7,12 @@ interface IconProps {
   hover?: boolean;
 }
 const IconList = ({ icon, hover }: IconProps) => {
+  if (icon.prompt === null) return <div>Something went wrong...</div>;
   return (
     <li key={icon.id}>
       <Image
-        title={icon.prompt !== null && hover !== false ? icon.prompt : ""}
-        className={`rounded-3xl transition ${
+        title={hover !== false ? icon.prompt : ""}
+        className={`mx-auto w-fit rounded-3xl transition ${
           hover !== false ? "hover:opacity-60" : ""
         }`}
         width="180"

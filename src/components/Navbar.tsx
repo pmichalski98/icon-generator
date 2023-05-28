@@ -56,9 +56,9 @@ export default function Navbar() {
             />
           </MyLink>
           <div className={`hidden items-center gap-4 md:flex `}>
-            <MyLink href="/generate">Generate</MyLink>
-            {isLoggedIn && <MyLink href="/collection">Collection</MyLink>}
-            <MyLink href="/community">Community</MyLink>
+            <MyLink href="/generate">Generator</MyLink>
+            {isLoggedIn && <MyLink href="/collection">Kolekcja</MyLink>}
+            <MyLink href="/community">Społeczność</MyLink>
           </div>
         </div>
         <div className="flex gap-4">
@@ -89,9 +89,8 @@ export default function Navbar() {
                 onClick={() => {
                   buyCredits().catch(console.error);
                 }}
-                disabled
               >
-                Buy credits
+                Doładuj konto
               </Button>
               <Button
                 variant={"secondary"}
