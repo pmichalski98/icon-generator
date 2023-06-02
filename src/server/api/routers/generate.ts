@@ -8,7 +8,7 @@ import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
 import axios from "axios";
 
-const s3 = new S3({
+export const s3 = new S3({
   credentials: {
     accessKeyId: env.S3_ACCESS_KEY,
     secretAccessKey: env.S3_SECRET_KEY,
