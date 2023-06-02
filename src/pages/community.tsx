@@ -1,6 +1,5 @@
 import React from "react";
 import { api } from "~/utils/api";
-import Image from "next/image";
 import IconList from "~/components/IconList";
 import { ClipLoader } from "react-spinners";
 
@@ -16,8 +15,8 @@ const Community = () => {
   if (error) return <div>Błąd przy ładowaniu zawartości...</div>;
   return (
     <>
-      <h1 className="mb-12 text-4xl font-medium">
-        Ikony wygenerowane przez społeczność
+      <h1 className="mb-12 text-5xl font-medium leading-tight text-rose-200">
+        Niedawno wygenerowane ikonki przez innych użytkowników
       </h1>
       <div className="grid grid-cols-2 flex-wrap justify-around gap-4 md:flex ">
         {data?.map((icon) => {

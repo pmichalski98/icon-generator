@@ -8,7 +8,7 @@ import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
 import axios from "axios";
 
-export const s3 = new S3({
+const s3 = new S3({
   credentials: {
     accessKeyId: env.S3_ACCESS_KEY,
     secretAccessKey: env.S3_SECRET_KEY,
@@ -79,7 +79,7 @@ export const generateRouter = createTRPCRouter({
       console.log(input.prompt);
       const finalPrompt = `modern icon of ${input.prompt}, ${
         input.color !== "random" ? input.color.concat(" ,") : ""
-      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality, textless`;
+      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality --no text + immense detail`;
       console.log(finalPrompt);
       const b64Images = await generateIcon(finalPrompt, input.quantity);
       if (!b64Images)
@@ -98,7 +98,7 @@ export const generateRouter = createTRPCRouter({
           });
           await s3
             .putObject({
-              Bucket: "generator-ikon",
+              Bucket: env.S3_BUCKETNAME,
               Body: Buffer.from(image, "base64"),
               Key: icon.id,
               ContentEncoding: "base64",

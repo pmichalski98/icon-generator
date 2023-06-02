@@ -48,16 +48,18 @@ export const iconsRouter = createTRPCRouter({
     .input(z.object({ iconId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const command = new GetObjectCommand({
-        Bucket: "generator-ikon",
+        Bucket: env.S3_BUCKETNAME,
         Key: input.iconId,
       });
       try {
         const res = await client.send(command);
-        return res.Body?.transformToByteArray();
+        const icon = res.Body?.transformToByteArray();
+        if (!icon) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+        return icon;
       } catch (err) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Błąd podczas pobierania ikonki",
+          message: "Nie udało się pobrać ",
         });
       }
     }),

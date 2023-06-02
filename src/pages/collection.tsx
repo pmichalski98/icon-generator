@@ -19,9 +19,12 @@ const Collection = () => {
       <h1 className="mb-12 flex flex-wrap gap-2 text-4xl font-medium">
         Twoja kolekcja <p className="text-rose-400">{data?.length}</p> ikon
       </h1>
-      <div className="grid grid-cols-2 flex-wrap justify-around gap-4 md:flex ">
+      <span className="text-xl leading-tight text-rose-200">
+        Uwaga: Najedź myszką na ikonkę, aby pobrać w najwyższej jakości
+      </span>
+      <div className="mt-10 grid grid-cols-2 flex-wrap justify-around gap-4 md:flex ">
         {data?.map((icon) => {
-          return <IconList icon={icon} key={icon.id} />;
+          return <IconList download icon={icon} key={icon.id} />;
         })}
       </div>
     </>

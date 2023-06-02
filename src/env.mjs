@@ -30,6 +30,7 @@ const server = z.object({
   PRODUCT_PRICE_ID:z.string(),
   STRIPE_WEBHOOK_SECRET:z.string(),
   DEEPL_API_KEY:z.string(),
+  S3_BUCKETNAME:z.string(),
 });
 
 /**
@@ -68,6 +69,7 @@ const processEnv = {
   PRODUCT_PRICE_ID:process.env.PRODUCT_PRICE_ID,
   STRIPE_WEBHOOK_SECRET:process.env.STRIPE_WEBHOOK_SECRET,
   DEEPL_API_KEY:process.env.DEEPL_API_KEY,
+  S3_BUCKETNAME:process.env.S3_BUCKETNAME,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
