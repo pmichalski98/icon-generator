@@ -10,8 +10,8 @@ import { type Icon } from ".prisma/client";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
-import { RxThickArrowUp } from "react-icons/rx";
 import FormLabel from "~/components/FormLabel";
+import { toast } from "react-toastify";
 
 const Generate: NextPage = () => {
   const { data } = useSession();
@@ -25,6 +25,9 @@ const Generate: NextPage = () => {
   const { mutate, isLoading, error } = api.generate.generateIcon.useMutation({
     onSuccess(data) {
       setImagesUrl(data);
+    },
+    onError(data) {
+      toast.error(data.message);
     },
   });
 
@@ -44,6 +47,7 @@ const Generate: NextPage = () => {
     mutate({ ...form, quantity: parseInt(form.quantity) });
   }
 
+  console.log(error, "halo");
   let isChecked = false;
   return (
     <section className="container mx-auto  lg:w-8/12">
@@ -55,23 +59,13 @@ const Generate: NextPage = () => {
         <FormGroup>
           <FormLabel>Opisz jak ma wyglądać Twoja ikonka</FormLabel>
           <Input
+            required
             onChange={updateForm("prompt")}
             value={form.prompt}
             type="text"
             className="w-full p-2 focus:outline-1 focus:outline-rose-400 "
             placeholder="np. groźna panda"
           />
-
-          {error && (
-            <p
-              className={
-                "py- flex w-fit items-center gap-2 rounded bg-red-600  px-4 py-2 text-xl font-medium"
-              }
-            >
-              <RxThickArrowUp size={30} />
-              Uzupełnij opis ikonki
-            </p>
-          )}
         </FormGroup>
         <FormGroup>
           <FormLabel>Wybierz główny kolor ikonki</FormLabel>

@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_KEY);
 export function useBuyCredits() {
-  const { mutateAsync } = api.checkout.checkout.useMutation();
+  const { mutateAsync } = api.checkout.checkout.useMutation({});
 
   return {
     buyCredits: async () => {

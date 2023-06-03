@@ -1,6 +1,8 @@
 import { type ReactNode } from "react";
 import Head from "next/head";
 import Navbar from "./Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -14,6 +16,18 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <Navbar />
       </header>
       <main className=" mx-auto mt-20 w-11/12 ">{children}</main>
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        autoClose={5000}
+      />
     </div>
   );
 };
