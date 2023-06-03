@@ -46,10 +46,10 @@ const Generate: NextPage = () => {
 
   let isChecked = false;
   return (
-    <section className="container mx-auto lg:w-8/12">
+    <section className="container mx-auto  lg:w-8/12">
       <h1 className="text-6xl ">Wygeneruj własne ikonki</h1>
       <h2 className="mt-10 text-xl">
-        Szybki i prosty generator ikon za pomocą sztucznej inteligencji
+        Szybki i prosty generator przy użyciu sztucznej inteligencji
       </h2>
       <form onSubmit={handleSubmit} className=" my-14 flex flex-col gap-4">
         <FormGroup>
@@ -143,7 +143,9 @@ const Generate: NextPage = () => {
         <div className="mb-36 flex flex-wrap gap-6">
           <h2 className="w-full text-3xl">Wygenerowane ikony</h2>
           {imagesUrl.map((icon) => {
-            return <IconList hover={false} icon={icon} key={icon.id} />;
+            return (
+              <IconList download hover={false} icon={icon} key={icon.id} />
+            );
           })}
         </div>
       )}

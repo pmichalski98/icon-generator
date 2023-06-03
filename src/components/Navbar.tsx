@@ -50,7 +50,7 @@ export default function Navbar() {
             <Image
               className="rounded-lg "
               alt={"logo"}
-              src={"/logo1.jpg"}
+              src={"/aiicon.png"}
               width={50}
               height={50}
             />

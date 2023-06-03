@@ -16,6 +16,10 @@ const client = new S3Client({
   region: "eu-north-1",
 });
 export const iconsRouter = createTRPCRouter({
+  getIconsCount: publicProcedure.query(async ({ ctx }) => {
+    const count = await ctx.prisma.icon.count({});
+    return count;
+  }),
   getIcons: protectedProcedure.query(async ({ ctx }) => {
     const icons = await ctx.prisma.icon.findMany({
       where: {

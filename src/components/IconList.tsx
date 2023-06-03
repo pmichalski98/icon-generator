@@ -4,6 +4,7 @@ import { type Icon } from ".prisma/client";
 import { api } from "~/utils/api";
 import fileDownload from "js-file-download";
 import { HiDownload } from "react-icons/hi";
+import { ClipLoader } from "react-spinners";
 
 interface IconProps {
   icon: Icon;
@@ -12,22 +13,24 @@ interface IconProps {
 }
 const IconList = ({ icon, hover, download }: IconProps) => {
   const [state, setState] = useState(false);
-  const { mutate: downloadImg } = api.icons.downloadIcon.useMutation({
-    onSuccess: (data) => {
-      fileDownload(data, "icon.png");
-    },
-  });
+  const { mutate: downloadImg, isLoading } = api.icons.downloadIcon.useMutation(
+    {
+      onSuccess: (data) => {
+        fileDownload(data, "wygenerowana_ikonka.png");
+      },
+    }
+  );
   if (icon.prompt === null) return <div>Something went wrong...</div>;
   return (
     <li
       key={icon.id}
-      className="flex justify-end "
+      className="flex w-fit justify-end "
       onMouseEnter={() => setState(true)}
       onMouseLeave={() => setState(false)}
     >
       <Image
         title={hover !== false ? icon.prompt : ""}
-        className={`relative mx-auto  rounded-3xl transition ${
+        className={` mx-auto  rounded-3xl transition ${
           state ? "hover:opacity-60" : ""
         }`}
         width="180"
@@ -39,11 +42,16 @@ const IconList = ({ icon, hover, download }: IconProps) => {
         <button
           className={`absolute p-2`}
           onClick={() => downloadImg({ iconId: icon.id })}
+          disabled={isLoading}
         >
-          <HiDownload
-            className="rounded border-2 border-slate-400 opacity-90 hover:opacity-70"
-            size={40}
-          />
+          {isLoading ? (
+            <ClipLoader color={"white"} size={40} />
+          ) : (
+            <HiDownload
+              className="rounded border-2 border-slate-400 opacity-90 hover:opacity-70"
+              size={40}
+            />
+          )}
         </button>
       )}
     </li>
