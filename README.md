@@ -8,6 +8,8 @@ Project utilizes opeanai's DALLE-2 to generate icons. After icon is generated it
 
 ## Here's a video that explains how to use my app
 
+https://github.com/pmichalski98/icon-generator/assets/108573628/9d895b17-ebd6-4c73-953a-a5482590aa46
+
 ## Tools used to create my app
 
 - [Next.js](https://nextjs.org)
