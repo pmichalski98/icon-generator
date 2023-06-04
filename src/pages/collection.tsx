@@ -1,6 +1,5 @@
 import React from "react";
 import { api } from "~/utils/api";
-import Image from "next/image";
 import IconList from "~/components/IconList";
 import { ClipLoader } from "react-spinners";
 
@@ -23,7 +22,7 @@ const Collection = () => {
         <span className="text-rose-400">Uwaga:</span> Najedź myszką na ikonkę,
         aby pobrać w najwyższej jakości
       </span>
-      <div className="mt-10 grid grid-cols-2 flex-wrap justify-around  gap-4 md:flex">
+      <div className="mt-10 grid grid-cols-2 flex-wrap justify-around justify-items-center  gap-4 md:flex">
         {data?.map((icon) => {
           return <IconList download icon={icon} key={icon.id} />;
         })}

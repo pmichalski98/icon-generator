@@ -45,7 +45,8 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
           where: { id: checkoutSessionCompleted.metadata.userId },
           data: {
             credits: {
-              increment: 100,
+              // how many credits user gets for payment
+              increment: 20,
             },
           },
         });

@@ -3,10 +3,9 @@ import React from "react";
 import Image from "next/image";
 import MyLinkBtnStyle from "~/components/MyLinkBtnStyle";
 import { api } from "~/utils/api";
-import { AiOutlineArrowDown } from "react-icons/ai";
 
 const Home: NextPage = () => {
-  const { data, isLoading, error } = api.icons.getIconsCount.useQuery();
+  const { data: iconsCount } = api.icons.getIconsCount.useQuery();
   return (
     <>
       <section className="container flex flex-col flex-wrap justify-around gap-4 md:flex-row">
@@ -37,7 +36,7 @@ const Home: NextPage = () => {
       <section className="container mx-auto mt-20 max-w-screen-lg text-center text-4xl ">
         <span className="">
           Nasi uzytkownicy wygenerowali już{" "}
-          <span className="text-rose-400"> {data} </span> ikonki
+          <span className="text-rose-400"> {iconsCount} </span> ikonki
         </span>
         <h2 className="mb-10 mt-20 text-5xl  font-medium text-rose-300">
           Zobacz jakie to proste

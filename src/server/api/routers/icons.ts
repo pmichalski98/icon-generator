@@ -16,9 +16,8 @@ const client = new S3Client({
   region: "eu-north-1",
 });
 export const iconsRouter = createTRPCRouter({
-  getIconsCount: publicProcedure.query(async ({ ctx }) => {
-    const count = await ctx.prisma.icon.count({});
-    return count;
+  getIconsCount: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.icon.count();
   }),
   getIcons: protectedProcedure.query(async ({ ctx }) => {
     const icons = await ctx.prisma.icon.findMany({
@@ -29,7 +28,7 @@ export const iconsRouter = createTRPCRouter({
         createdAt: "desc",
       },
     });
-    if (icons.length === 0)
+    if (!icons)
       throw new TRPCError({
         code: "NOT_FOUND",
       });
@@ -37,7 +36,7 @@ export const iconsRouter = createTRPCRouter({
   }),
   getCommunityIcons: publicProcedure.query(async ({ ctx }) => {
     const comIcons = await ctx.prisma.icon.findMany({
-      take: 20,
+      take: 50,
       orderBy: {
         createdAt: "desc",
       },
@@ -50,20 +49,18 @@ export const iconsRouter = createTRPCRouter({
   }),
   downloadIcon: protectedProcedure
     .input(z.object({ iconId: z.string() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const command = new GetObjectCommand({
         Bucket: env.S3_BUCKETNAME,
         Key: input.iconId,
       });
       try {
         const res = await client.send(command);
-        const icon = res.Body?.transformToByteArray();
-        if (!icon) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-        return icon;
+        return res.Body?.transformToByteArray();
       } catch (err) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "Nie udało się pobrać ",
+          message: "Nie udało się pobrać ikonki",
         });
       }
     }),

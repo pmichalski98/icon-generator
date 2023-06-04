@@ -3,15 +3,13 @@ import Button from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import MyLink from "~/components/MyLink";
 import { api } from "~/utils/api";
-import React, { useState } from "react";
-import { GiTwoCoins, GiHamburgerMenu } from "react-icons/gi";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import { GiHamburgerMenu, GiTwoCoins } from "react-icons/gi";
 import { BiRefresh } from "react-icons/bi";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from "next/image";
-
 export default function Navbar() {
   const { data } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = !!data;
   const { buyCredits } = useBuyCredits();
   const {
@@ -19,11 +17,14 @@ export default function Navbar() {
     error,
     isLoading,
   } = api.user.getCredits.useQuery(undefined, { enabled: isLoggedIn });
+  const [isOpen, setIsOpen] = useState(false);
 
+  console.log(isOpen);
   const utils = api.useContext();
   async function refreshCredits() {
     await utils.user.getCredits.invalidate();
   }
+
   return (
     <nav className="container mx-auto ">
       <div className="flex justify-between  gap-4 px-4 py-4">

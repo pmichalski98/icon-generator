@@ -76,11 +76,9 @@ export const generateRouter = createTRPCRouter({
         input.prompt = res.data.translations[0].text as string;
       }
 
-      console.log(input.prompt);
       const finalPrompt = `modern icon of ${input.prompt}, ${
         input.color !== "random" ? input.color.concat(" ,") : ""
       } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality --no text --no dof`;
-      console.log(finalPrompt);
       const b64Images = await generateIcon(finalPrompt, input.quantity);
       if (!b64Images)
         throw new TRPCError({
