@@ -47,7 +47,6 @@ const Generate: NextPage = () => {
     mutate({ ...form, quantity: parseInt(form.quantity) });
   }
 
-  console.log(error, "halo");
   let isChecked = false;
   return (
     <section className="container mx-auto  lg:w-8/12">

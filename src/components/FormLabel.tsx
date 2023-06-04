@@ -1,5 +1,4 @@
-import React, { ComponentPropsWithoutRef } from "react";
-import { label } from "aws-sdk/clients/sns";
+import React, { type ComponentPropsWithoutRef } from "react";
 import classNames from "classnames";
 
 const FormLabel = (props: ComponentPropsWithoutRef<"label">) => {

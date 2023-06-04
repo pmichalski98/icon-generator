@@ -16,11 +16,10 @@ const IconList = ({ icon, hover, download }: IconProps) => {
   const { mutate: downloadImg, isLoading } = api.icons.downloadIcon.useMutation(
     {
       onSuccess: (data) => {
-        fileDownload(data, "wygenerowana_ikonka.png");
+        fileDownload(data as ArrayBuffer, "wygenerowana_ikonka.png");
       },
     }
   );
-  if (icon.prompt === null) return <div>Something went wrong...</div>;
   return (
     <li
       key={icon.id}
@@ -29,7 +28,7 @@ const IconList = ({ icon, hover, download }: IconProps) => {
       onMouseLeave={() => setState(false)}
     >
       <Image
-        title={hover !== false ? icon.prompt : ""}
+        title={hover !== false ? icon.prompt! : ""}
         className={` mx-auto  rounded-3xl transition ${
           state ? "hover:opacity-60" : ""
         }`}

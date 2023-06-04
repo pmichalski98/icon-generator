@@ -3,11 +3,12 @@ import Button from "./Button";
 import { useBuyCredits } from "~/hooks/useBuyCredits";
 import MyLink from "~/components/MyLink";
 import { api } from "~/utils/api";
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import React, { useState } from "react";
 import { GiHamburgerMenu, GiTwoCoins } from "react-icons/gi";
 import { BiRefresh } from "react-icons/bi";
 import { IoCloseSharp } from "react-icons/io5";
 import Image from "next/image";
+
 export default function Navbar() {
   const { data } = useSession();
   const isLoggedIn = !!data;
@@ -19,7 +20,6 @@ export default function Navbar() {
   } = api.user.getCredits.useQuery(undefined, { enabled: isLoggedIn });
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(isOpen);
   const utils = api.useContext();
   async function refreshCredits() {
     await utils.user.getCredits.invalidate();
