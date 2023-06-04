@@ -5,7 +5,8 @@
 This project utilizes opeanai's DALLE-2 to generate icons.
 
 ## Here's a video that explains how to use my app
-[vid.mp4](..%2F..%2FUsers%2Fpiotr%2FVideos%2Fvid.mp4)
+
+https://github.com/pmichalski98/icon-generator/assets/108573628/9d895b17-ebd6-4c73-953a-a5482590aa46
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
@@ -15,3 +16,7 @@ This project utilizes opeanai's DALLE-2 to generate icons.
 - [Stripe](https://stripe.com/en-pl)
 - [AWS Amplify](https://stripe.com/en-pl)
 - [AWS S3](https://stripe.com/en-pl)
+
+
+
+
