@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import { env } from "~/env.mjs";
 import { S3 } from "aws-sdk";
 import { base64Img } from "~/data/base64Img";
@@ -15,23 +15,25 @@ const s3 = new S3({
   },
   region: "eu-north-1",
 });
-const configuration = new Configuration({
+
+const openai = new OpenAI({
   apiKey: env.DALLE_API_KEY,
+
 });
-const openai = new OpenAIApi(configuration);
 
 async function generateIcon(prompt: string, quantity = 1) {
   console.log("mock = ", env.MOCK_DALLE);
   if (env.MOCK_DALLE === "true") {
-    return new Array<string>(quantity).fill(base64Img);
+    return new Array<string>(quantity).fill(base64Img as string);
   } else {
-    const response = await openai.createImage({
-      prompt,
-      n: quantity,
-      size: "512x512",
+        const response = await openai.images.generate({
+      model: "dall-e-3",
+        prompt,
+          style: "natural",
       response_format: "b64_json",
     });
-    return response.data.data.map((result) => result.b64_json || "");
+
+    return response.data.map((result) => result.b64_json || "");
   }
 }
 
@@ -75,10 +77,11 @@ export const generateRouter = createTRPCRouter({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         input.prompt = res.data.translations[0].text as string;
       }
+      const modificators = 'material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality clean --no text --no dof'
 
       const finalPrompt = `modern icon of ${input.prompt}, ${
         input.color !== "random" ? input.color.concat(" ,") : ""
-      } material, shiny, minimalistic, high quality, trending on art station, unreal engine graphics quality --no text --no dof`;
+      } ${modificators}`;
       const b64Images = await generateIcon(finalPrompt, input.quantity);
       if (!b64Images)
         throw new TRPCError({
